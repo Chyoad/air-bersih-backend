@@ -11,6 +11,9 @@
       "^.+\\.[t|j]sx?$": "babel-jest"
     }
   },
+  "prisma": {
+    "seed": "node prisma/seeders/seed.js"
+  },
   "author": "cahyo adi purnomo",
   "license": "ISC",
   "type": "module",

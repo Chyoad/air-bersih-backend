@@ -76,37 +76,113 @@
         },
         "responses": {
           "200": {
-            "description": "Success create todolist",
+            "description": "Success create new user",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Todolist"
                 },
                 "examples": {
-                  "java": {
-                    "description": "Success create java todolist",
-                    "value": {
-                      "id": "1",
-                      "name": "Java",
-                      "priority": 3,
-                      "tags": [
-                        "Java",
-                        "Programming"
-                      ]
-                    }
-                  },
-                  "php": {
-                    "description": "Success create php todolist",
-                    "value": {
-                      "id": "2",
-                      "name": "PHP",
-                      "priority": 5,
-                      "tags": [
-                        "PHP",
-                        "Programming"
-                      ]
-                    }
+                  "adi": {
+                  "description": "Success create new user",
+                  "value": {
+                    "id_user": 1,
+                    "nama": "adi",
+                    "no_telepon": "12345678910",
+                    "email": "adi@gmail.com",
+                    "password": "12345678",
+                    "alamat": "madiun"
                   }
+                },
+                "bagas": {
+                  "description": "Success create new user",
+                  "value": {
+                    "id_user": 1,
+                    "nama": "bagas",
+                    "no_telepon": "12345678911",
+                    "email": "bagas@gmail.com",
+                    "password": "12345678",
+                    "alamat": "solo"
+                  }
+                }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create new user",
+        "description": "Create new user to database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateTodolist"
+              },
+              "examples": {
+                "adi": {
+                  "description": "Example create new user",
+                  "value": {
+                    "nama": "adi",
+                    "no_telepon": "12345678910",
+                    "email": "adi@gmail.com",
+                    "password": "12345678",
+                    "alamat": "madiun"
+                  }
+                },
+                "bagas": {
+                  "description": "Example create new user",
+                  "value": {
+                    "nama": "bagas",
+                    "no_telepon": "12345678911",
+                    "email": "bagas@gmail.com",
+                    "password": "12345678",
+                    "alamat": "solo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success create new user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todolist"
+                },
+                "examples": {
+                  "adi": {
+                  "description": "Success create new user",
+                  "value": {
+                    "id_user": 1,
+                    "nama": "adi",
+                    "no_telepon": "12345678910",
+                    "email": "adi@gmail.com",
+                    "password": "12345678",
+                    "alamat": "madiun"
+                  }
+                },
+                "bagas": {
+                  "description": "Success create new user",
+                  "value": {
+                    "id_user": 1,
+                    "nama": "bagas",
+                    "no_telepon": "12345678911",
+                    "email": "bagas@gmail.com",
+                    "password": "12345678",
+                    "alamat": "solo"
+                  }
+                }
                 }
               }
             }

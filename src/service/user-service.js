@@ -73,12 +73,12 @@ const login = async (request) => {
   });
 }
 
-const get = async (email) => {
-  email = validate(getUserValidation, email);
+const get = async (id_user) => {
+  id_user = validate(getUserValidation, id_user);
 
   const user = await prismaClient.user.findUnique({
     where: {
-      email: email
+      id_user: id_user
     },
     select: {
       id_user: true,

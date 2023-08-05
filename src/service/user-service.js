@@ -8,6 +8,7 @@ import { prismaClient } from "../app/database.js";
 import { ResponseError } from "../error/response-error.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
+import jwt from 'jsonwebtoken';
 
 const register = async (request) => {
   const user = validate(registerUserValidation, request);
@@ -24,8 +25,17 @@ const register = async (request) => {
 
   user.password = await bcrypt.hash(user.password, 10);
 
+  const id_user = uuid().toString()
+
   return prismaClient.user.create({
-    data: user,
+    data: {
+      id_user: id_user,
+      nama: user.nama,
+      no_telepon: user.no_telepon,
+      email: user.email,
+      password: user.password,
+      alamat: user.alamat
+    },
     select: {
       id_user: true,
       nama: true,
@@ -44,21 +54,25 @@ const login = async (request) => {
       email: loginRequest.email
     },
     select: {
+      id_user: true,
       email: true,
       password: true
     }
   });
 
   if (!user) {
-    throw new ResponseError(401, "Username or password wrong");
+    throw new ResponseError(401, "Email or password wrong");
   }
 
   const isPasswordValid = await bcrypt.compare(loginRequest.password, user.password);
   if (!isPasswordValid) {
-    throw new ResponseError(401, "Username or password wrong");
+    throw new ResponseError(401, "Email or password wrong");
   }
 
-  const token = uuid().toString()
+  const token = jwt.sign({ id_user: user.id_user }, process.env.TOKEN_SECRET_KEY, { expiresIn: 86400 });
+
+  console.log(token);
+
   return prismaClient.user.update({
     data: {
       token: token

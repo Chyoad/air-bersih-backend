@@ -1,13 +1,13 @@
 -- CreateTable
 CREATE TABLE `users` (
-    `id_user` INTEGER NOT NULL AUTO_INCREMENT,
+    `id_user` VARCHAR(255) NOT NULL,
     `nama` VARCHAR(100) NOT NULL,
     `no_telepon` VARCHAR(20) NULL,
     `email` VARCHAR(100) NOT NULL,
     `password` VARCHAR(100) NOT NULL,
     `level` INTEGER NULL,
     `alamat` VARCHAR(255) NULL,
-    `token` VARCHAR(100) NULL,
+    `token` VARCHAR(255) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 

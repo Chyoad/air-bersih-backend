@@ -5,7 +5,7 @@ CREATE TABLE `users` (
     `no_telepon` VARCHAR(20) NULL,
     `email` VARCHAR(100) NOT NULL,
     `password` VARCHAR(100) NOT NULL,
-    `level` INTEGER NULL,
+    `role` ENUM('SUPER_ADMIN', 'ADMIN', 'PETUGAS') NOT NULL DEFAULT 'PETUGAS',
     `alamat` VARCHAR(255) NULL,
     `token` VARCHAR(255) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

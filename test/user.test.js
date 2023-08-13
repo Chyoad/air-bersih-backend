@@ -1,8 +1,8 @@
 import supertest from "supertest";
 import { web } from "../src/app/web.js";
 import { logger } from "../src/app/logging.js";
-import { createTestUser, getTestUser, removeTestUser } from "./test-util.js";
-import bcrypt from "bcrypt";
+import { createTestUser, getTestUser, loginTestUser, removeTestUser } from "./test-util.js";
+let token;
 
 describe('POST /api/users/register', function () {
 
@@ -135,7 +135,7 @@ describe('POST /api/users/login', function () {
     const result = await supertest(web)
       .post('/api/users/login')
       .send({
-        email: "salah",
+        email: "salah@gmail.com",
         password: "12345678"
       });
 
@@ -149,6 +149,7 @@ describe('POST /api/users/login', function () {
 describe('GET /api/users/current', function () {
   beforeEach(async () => {
     await createTestUser();
+    token = await loginTestUser();
   });
 
   afterEach(async () => {
@@ -158,7 +159,7 @@ describe('GET /api/users/current', function () {
   it('should can get current user', async () => {
     const result = await supertest(web)
       .get('/api/users/current')
-      .set('Authorization', 'test');
+      .set('Authorization', `${token}`);
 
     expect(result.status).toBe(200);
     expect(result.body.data.email).toBe('user@gmail.com');
@@ -168,7 +169,7 @@ describe('GET /api/users/current', function () {
   it('should reject if token is invalid', async () => {
     const result = await supertest(web)
       .get('/api/users/current')
-      .set('Authorization', 'salah');
+      .set('Authorization', `salah`);
 
     expect(result.status).toBe(401);
     expect(result.body.errors).toBeDefined();

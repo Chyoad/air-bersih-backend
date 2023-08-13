@@ -16,11 +16,56 @@ model User {
   no_telepon  String?   @db.VarChar(20)
   email       String    @unique @db.VarChar(100)
   password    String    @db.VarChar(100)
-  level       Int? 
+  role        Role      @default(PETUGAS)
   alamat      String?   @db.VarChar(255)
   token       String?   @db.VarChar(255)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
   @@map("users")
+}
+
+model Layanan {
+  id_layanan    String      @id @db.VarChar(255)
+  nama_layanan  String      @db.VarChar(100)
+  tarif         Int
+  pelanggans    Pelanggan[]
+
+  @@map("layanans")
+}
+
+model Pelanggan {
+  id_pelanggan    String   @id @db.VarChar(255)
+  nama_pelanggan  String   @db.VarChar(100)
+  layanan         Layanan  @relation(fields: [id_layanan], references: [id_layanan])
+  id_layanan      String   @db.VarChar(255)
+  alamat          String   @db.VarChar(255)
+  no_telepon      String   @db.VarChar(20)
+  meter_awal      Int
+  pemakaians      Pemakaian[]
+
+  @@map("pelanggans")
+}
+
+model Pemakaian {
+  id_pemakaian      String    @id @db.VarChar(255)
+  pelanggan         Pelanggan @relation(fields: [id_pelanggan], references: [id_pelanggan])
+  id_pelanggan      String    @db.VarChar(255)
+  meter_awal        Int       
+  meter_akhir       Int
+  tarif             Int
+  tanggal_input     DateTime  @default(now())
+  inputed_by        String    @db.VarChar(100)
+  paymaster         String    @db.VarChar(255)
+  status_pembayaran String    @db.VarChar(100)
+  tanggal_bayar     DateTime
+  denda             Int
+
+  @@map("pemakaians")
+}
+
+enum Role{
+  SUPER_ADMIN
+  ADMIN
+  PETUGAS
 }

@@ -1,6 +1,8 @@
 import { prismaClient } from "../src/app/database.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid";
+import { web } from "../src/app/web.js";
+import supertest from "supertest";
 
 
 export const removeTestUser = async () => {
@@ -23,6 +25,18 @@ export const createTestUser = async () => {
       alamat: "solo"
     }
   })
+}
+
+let token;
+export const loginTestUser = async () => {
+  const result = await supertest(web)
+    .post('/api/users/login')
+    .send({
+      email: "user@gmail.com",
+      password: "12345678"
+    })
+
+  return token = result.body.data.token
 }
 
 export const getTestUser = async () => {
